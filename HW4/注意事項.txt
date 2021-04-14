@@ -1,0 +1,3 @@
+	undefine 的 xml 必須在 Code 資料夾內
+
+	define 的 xml 必須在 Code 資料夾上層

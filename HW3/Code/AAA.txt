@@ -1,0 +1,86 @@
+#include "Conv.h"
+
+//float weight[9]={-0.352478,0.449585,-0.358398,0.405121,0.192902,-0.196930,-0.073425,-0.429596,0.466614},input[100]={41,35,190,132,225,108,214,174,82,144,73,241,241,187,233,235,179,166,219,60,135,12,62,153,36,94,13,28,6,183,71,222,179,18,77,200,67,187,139,166,31,3,90,125,9,56,37,31,93,212,203,252,150,245,69,59,19,13,137,10,28,219,174,50,32,154,80,238,64,120,54,253,18,73,50,246,158,125,73,220,173,79,20,242,68,64,102,208,107,196,48,183,50,59,161,34,246,34,145,157},bias=0.183197;
+float weight[9],input[100],bias;
+int  i=0,j=0,k=2,l=-100,Q;
+sc_int < 19 > temp=0;
+
+void Conv::run() {
+	// vvvvv put your code here vvvvv
+
+	if(l==-100&&i<=112)
+	{
+		data_out_signal=0;
+		rom_rd=1;
+		rom_addr=i;
+		if (i>=2&&i<102)
+		{
+			Q= data_in;
+    //cout<<i-2<<"  " <<data_in<< endl;
+		}
+		else if (i<111)
+		{
+			weight[i-102] = data_in;
+    //cout<<i-102<<"  " <<weight[i-102]<< endl;
+		}
+		else if (i==111)
+		{
+			bias = data_in;
+		}
+		if(j==0&&i==0)
+		{
+			j++;
+			i--;
+		}
+		i++;
+		if(i==113)
+		{
+			l=0;
+		}
+	}
+	else
+	{
+		data_out_signal=0;
+		for(int u=0;u<3;u++)
+		{
+			rom_addr=l+10*(k/3)+(k%3);
+			Q=data_in;
+		}
+		{
+			rom_addr=l+10*((k)/3)+((k)%3);
+			//temp = temp+(data_in * weight [(k-2)]);
+			temp += (sc_int < 19 >)(data_in * weight [(k-2)]);
+			//cout <<l<<"  "<<k<<"  "<< data_in<<"  "<<weight [k-2]<<"  "<< temp<< endl;
+		}
+		if (k==10) 
+		{
+			temp= temp+bias;
+			if(temp<=0)
+			{
+				temp=0;
+			}
+			data_out_signal=1;
+			//cout << endl;
+			data_out=temp;
+			//cout << endl;
+			temp = 0;
+		}
+		if(k!=10)
+		{ 
+			k++;
+		}
+		else
+		{ 
+			k=0;
+			if (l%10==7)
+			{
+				l+=3;
+			}
+			else if (l%10!=7)
+			{
+				l++;
+			}
+		}
+	}
+	// ^^^^^ put your code here ^^^^^
+}
