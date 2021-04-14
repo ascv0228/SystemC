@@ -1,6 +1,0 @@
-COWAREHOME=/usr/cad/synopsys/pa_virtualizer/cur/SLS/linux
-ARFLAGS = 
-CXX=gcc-5.2.0-64
-
-
-

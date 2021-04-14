@@ -1,1 +1,0 @@
-vpa::start_simulation Debug/sim {/home/b083022053/SC/Lab2/Code/export} {--cwr_wait --cwr_properties_xml Properties.xml} 120
